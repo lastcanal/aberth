@@ -28,7 +28,6 @@
 
 init(_Ref, Transport, Socket, _Opts) ->
     {ok, {Ip, _Port}} = inet:peername(Socket),
-    lager:info("got connection from ~p", [inet_parse:ntoa(Ip)]),
     wait_request(#state{transport = Transport, socket = Socket}).
 
 -spec wait_request(state()) -> ok.
@@ -45,7 +44,6 @@ wait_request(State=#state{transport=Transport, socket=Socket}) ->
     end.
 
 reply(Reply, State=#state{transport=Transport, socket=Socket}) ->
-    lager:debug("will return ~p~n", [Reply]),
     Returned = bert:encode(Reply),
     Transport:send(Socket, Returned),
     wait_request(State).
@@ -69,7 +67,6 @@ process_call(Mod, Fun, Args, Info) ->
     end.
 
 process({call, Mod, Fun, Args}, _State=#state{info=Info}) ->
-    lager:debug("info packet is ~p~n", [Info]),
     Reply = process_call(Mod, Fun, Args, Info),
     {ok, Reply};
 
@@ -78,8 +75,6 @@ process({cast, Mod, Fun, Args}, _State=#state{info=Info}) ->
     {ok, {noreply}};
 
 process({info, Command, Options}, _State) ->
-    lager:debug("info command: ~p~n", [Command]),
-    lager:debug("info options: ~p~n", [Options]),
     {info, {Command, Options}};
 
 process(_, _) ->

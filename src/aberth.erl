@@ -30,8 +30,7 @@
 start() ->
 	application:load(aberth),
     aberth_app:ensure_deps_started(),
-	ok = application:start(aberth),
-    lager:info("Aberth started.").
+	ok = application:start(aberth).
 
 stop() ->
 	application:stop(aberth).
