@@ -27,7 +27,7 @@
 -export([init/4]).
 
 init(_Ref, Transport, Socket, _Opts) ->
-    {ok, {Ip, _Port}} = inet:peername(Socket),
+    {ok, {_Ip, _Port}} = inet:peername(Socket),
     wait_request(#state{transport = Transport, socket = Socket}).
 
 -spec wait_request(state()) -> ok.
