@@ -10,7 +10,8 @@
                   compiler,
                   syntax_tools,
                   goldrush,
-                  barrel
+                  barrel,
+                  worker_pool
                  ]},
   {mod, { aberth_app, []}},
   {env, []}
